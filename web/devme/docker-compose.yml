@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  chall:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    deploy:
+      restart_policy:
+        condition: any
+    ports:
+      - '127.0.0.1:4004:8000'
+    read_only: true
