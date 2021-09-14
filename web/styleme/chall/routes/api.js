@@ -149,11 +149,18 @@ router.post("/submit", requiresLogin, async (req, res) => {
     }
 
     req.session.lastSubmit = new Date();
-    
-    // uhhh
-    // do something here to look at your URL with the extension installed
-    // the admin bot only installs stuff from https://styleme.be.ax
-    // and also skips all the confirmation dialogs :>
+
+    let target = ["admin1", "admin2", "admin3"][Math.floor(Math.random() * 3)];
+    fetch(`http://${target}/xss/add`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": process.env.XSSBOT_SECRET
+        },
+        body: JSON.stringify({
+            url
+        })
+    });
 
     req.session.info = "An admin will look at your style soon.";
     return res.redirect("/submit");

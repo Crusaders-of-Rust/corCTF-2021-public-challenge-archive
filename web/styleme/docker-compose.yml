@@ -10,10 +10,51 @@ services:
     networks:
       - styleme
     ports:
-      - '80:80'
+      - '6008:80'
     environment:
-      - SESSION_SECRET=REDACTED
+      - SESSION_SECRET=R1BW6oOnso7X5xYtZpEjxlw7WY4iCTt9gXcHIBfmle39ylKS023rVNoof3pLiaQX
       - FLAG=corctf{omg_css_is_sooooo_vulnerable!!!!!!!!!!}
+      - XSSBOT_SECRET=J72tvBfeno5sfyfnmu9gCzE2G41bfsjwBvKNCMRLaYKQ2QDMnH6T71U8GrPM6znv
+      - SITE=https://styleme.be.ax
+
+  admin1:
+    image: styleme_admin
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    deploy:
+      restart_policy:
+        condition: any
+    networks:
+      - styleme
+    environment:
+      - XSSBOT_SECRET=J72tvBfeno5sfyfnmu9gCzE2G41bfsjwBvKNCMRLaYKQ2QDMnH6T71U8GrPM6znv
+      - SITE=https://styleme.be.ax
+
+  admin2:
+    image: styleme_admin
+    depends_on:
+      - admin1
+    deploy:
+      restart_policy:
+        condition: any
+    networks:
+      - styleme
+    environment:
+      - XSSBOT_SECRET=J72tvBfeno5sfyfnmu9gCzE2G41bfsjwBvKNCMRLaYKQ2QDMnH6T71U8GrPM6znv
+      - SITE=https://styleme.be.ax
+
+  admin3:
+    image: styleme_admin
+    depends_on:
+      - admin1
+    deploy:
+      restart_policy:
+        condition: any
+    networks:
+      - styleme
+    environment:
+      - XSSBOT_SECRET=J72tvBfeno5sfyfnmu9gCzE2G41bfsjwBvKNCMRLaYKQ2QDMnH6T71U8GrPM6znv
       - SITE=https://styleme.be.ax
 
 networks:
